@@ -15,9 +15,11 @@ use App\Http\Controllers\GraphController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/', [GraphController::class, 'showGraph'])->name('graphs.show');
 
-Route::get('/graphs', [GraphController::class, 'showGraph'])->name('graphs.show');
+Route::get('/pie',[GraphController::class, 'piechart'])->name('pieChart.show');
+
+Route::get('/line',[GraphController::class,'linechart'])->name('lineChart.show');
+
+Route::get('/google',[GraphController::class,'barchartGOOGLE'])->name('google-charts.show');
