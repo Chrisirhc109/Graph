@@ -27,7 +27,7 @@
           </div>
         </div>
     <!-- Container for the chart -->
-    <div id="chart_div" style="width: 300px"></div>
+    <div id="chart_div" style="width:1300px; height:800px"></div>
 
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
