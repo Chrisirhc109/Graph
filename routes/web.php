@@ -14,12 +14,16 @@ use App\Http\Controllers\GraphController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/dashboard', function () {
+    return view('header');
+});
 
 Route::get('/', [GraphController::class, 'showGraph'])->name('graphs.show');
 
 Route::get('/pie',[GraphController::class, 'piechart'])->name('pieChart.show');
 
 Route::get('/line',[GraphController::class,'linechart'])->name('lineChart.show');
+
+Route::get('/donut',[GraphController::class,'donutchart'])->name('donutChart.show');
 
 Route::get('/google',[GraphController::class,'barchartGOOGLE'])->name('google-charts.show');

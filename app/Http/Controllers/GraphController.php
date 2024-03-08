@@ -54,7 +54,6 @@ class GraphController extends Controller
     public function piechart() //PIE CHART
     {
         $userCountsPie = User::selectRaw('MONTH(created_at) as monthPie, COUNT(*) as countPie')
-        ->whereYear('created_at',date('Y'))
         ->groupBy('monthPie')
         ->orderBy('monthPie')
         ->get();
@@ -76,7 +75,6 @@ class GraphController extends Controller
     public function linechart()//LINE CHART
     {
         $userCountsLine = User::selectRaw('MONTH(created_at) as monthLine, COUNT(*) as countLine')
-        ->whereYear('created_at',date('Y'))
         ->groupBy('monthLine')
         ->orderBy('monthLine')
         ->get();
@@ -94,17 +92,38 @@ class GraphController extends Controller
         return view ('lineChart', compact( 'labelsLine', 'dataLine','colorsLine' ));
     }
 
+    public function donutchart()//DONUT CHART
+    {   
+        $userCountsDonut = User::selectRaw('MONTH(created_at) as monthDonut, COUNT(*) as countDonut')
+        ->groupBy('monthDonut')
+        ->orderBy('monthDonut')
+        ->get();
+
+        $labelsDonut=[];
+        $colorsDonut=['#FF5733', '#33FF57', '#5733FF', '#FF33E6', '#33E6FF', '#FFA500', '#00FFFF', '#FF1493', '#8A2BE2', '#008080', '#800080'];
+        
+
+        $dataDonut = $userCountsDonut->pluck('countDonut')->toArray();
+
+        foreach($userCountsDonut as $UserCountsDonut)
+        {
+            $monthDonut = date('F',mktime(0,0,0,$UserCountsDonut->monthDonut,1,0));
+            $labelsDonut[]=$monthDonut;
+        
+        }
+        return view('donutChart',compact('labelsDonut','dataDonut', 'colorsDonut'));
+    }
+
     public function barchartGOOGLE()
     {
-        $userCountsGoo = USer::selectRaw('MONTH(created_at) as monthGoogle, COUNT(*) as countGoogle')
-        ->whereYear('created_at', date('Y'))
+        $userCountsGoo = User::selectRaw('MONTH(created_at) as monthGoogle, COUNT(*) as countGoogle')
         ->groupBy('monthGoogle')
         ->orderBy('monthGoogle')
         ->get();
 
         $data = [['Month','Number of Users']];
         foreach ($userCountsGoo as $UserCountsGoogle){
-            $monthName = date('F',mktime(0,0,0,$UserCountsGoogle->month,1));
+            $monthName = date('F',mktime(0,0,0,$UserCountsGoogle->monthGoogle,1,0));
             $data[] = [$monthName,$UserCountsGoogle->countGoogle];
 
         }
