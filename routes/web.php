@@ -23,3 +23,7 @@ Route::get('/pie',[GraphController::class, 'piechart'])->name('pieChart.show');
 Route::get('/line',[GraphController::class,'linechart'])->name('lineChart.show');
 
 Route::get('/google',[GraphController::class,'barchartGOOGLE'])->name('google-charts.show');
+
+Route::get('/all-graph',[GraphController::class, ''])->name('all-graph.show'); //not complete yet
+
+
